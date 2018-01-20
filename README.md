@@ -168,11 +168,6 @@ $ sudo apt-get update && sudo apt-get install unifi -y
 $ sudo service unifi status
 ```
 
-```
-$ sudo ufw allow 8443
-$ sudo ufw enable
-```
-
 ### Create a unifi profile for `ufw` firewall
 
  - Create a configuration file for the profile.
