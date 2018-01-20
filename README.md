@@ -121,7 +121,7 @@ $ sudo ufw enable
  - Next we'll verify that the firewall is working.
 
 ```
-# sudo ufw status
+$ sudo ufw status
 Status: active
  
 To                         Action      From
@@ -131,6 +131,14 @@ OpenSSH (v6)               ALLOW       Anywhere (v6)
 ```
 
 With the firewall enabled, the server is now reasonably secured.
+
+## Update the system
+
+Now is a good time to update all of the preinstalled packages on the server.
+
+```
+$ sudo apt-get update && sudo apt-get upgrade -y
+```
 
 ## Install Unifi
 
