@@ -17,7 +17,7 @@ After logging in to the DigitalOcean [dashboard](https://cloud.digitalocean.com/
 
  - Under **Choose a datacenter region**, select a region that is close to you and your clients.
  - Under **Select additional options**, select both `Backups` and `Monitoring`. These free addons are important for any production system.
- - Under **Add your SSH keys**, select the SSH key for the machine you are currently working on or create one. If you choose not to use SSH authentication, you can still log in to your droplet using a username and password but SSH is the preferred method because of its increased security. More information about SSH logins can be found [here](do2).
+ - Under **Add your SSH keys**, select the SSH key for the machine you are currently working on or create one. If you choose not to use SSH authentication, you can still log in to your droplet using a username and password but SSH is the preferred method because of its increased security. More information about SSH logins can be found [here](https://www.digitalocean.com/community/tutorials/how-to-connect-to-your-droplet-with-ssh).
 
 ![screenshot](screenshots/unifi04.png)
 
@@ -226,18 +226,10 @@ The server is ready for all intents and purposes. Visit the following URL in you
 
 #### Additional Reading
 
- - [How To Create Your First DigitalOcean Droplet][do1]
- - [How To Connect To Your Droplet with SSH][do2]
- - [How To Log Into Your Droplet with PuTTY (for windows users)][do3]
- - [Initial Server Setup with Ubuntu 16.04][do4]
- - [UFW Essentials: Common Firewall Rules and Commands][do5]
- - [UniFi - How to Install & Update via APT on Debian or Ubuntu][ub1]
- - [UniFi - Ports Used][ub2]
-
-[d01]: https://www.digitalocean.com/community/tutorials/how-to-create-your-first-digitalocean-droplet
-[do2]: https://www.digitalocean.com/community/tutorials/how-to-connect-to-your-droplet-with-ssh
-[do3]: https://www.digitalocean.com/community/tutorials/how-to-log-into-your-droplet-with-putty-for-windows-users
-[do4]: https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04
-[d05]: https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands
-[ub1]: https://help.ubnt.com/hc/en-us/articles/220066768-UniFi-How-to-Install-Update-via-APT-on-Debian-or-Ubuntu
-[ub2]: https://help.ubnt.com/hc/en-us/articles/218506997-UniFi-Ports-Used
+ - [How To Create Your First DigitalOcean Droplet](https://www.digitalocean.com/community/tutorials/how-to-create-your-first-digitalocean-droplet)
+ - [How To Connect To Your Droplet with SSH](https://www.digitalocean.com/community/tutorials/how-to-connect-to-your-droplet-with-ssh)
+ - [How To Log Into Your Droplet with PuTTY (for windows users)](https://www.digitalocean.com/community/tutorials/how-to-log-into-your-droplet-with-putty-for-windows-users)
+ - [Initial Server Setup with Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)
+ - [UFW Essentials: Common Firewall Rules and Commands](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
+ - [UniFi - How to Install & Update via APT on Debian or Ubuntu](https://help.ubnt.com/hc/en-us/articles/220066768-UniFi-How-to-Install-Update-via-APT-on-Debian-or-Ubuntu)
+ - [UniFi - Ports Used](https://help.ubnt.com/hc/en-us/articles/218506997-UniFi-Ports-Used)
