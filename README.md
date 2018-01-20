@@ -94,31 +94,41 @@ $ ssh ubnt@<IP_ADDRESS>
 
  - Make sure that the root directory is not writeable by group.
 
-    $ sudo chmod g-w /
+```
+$ sudo chmod g-w /
+```
 
  - We will use the built-in `ufw` firewall. You can see what apps are already recognized by `ufw` by using the following command.
 
-    $ sudo ufw app list
-    Available applications:
-      OpenSSH
+```
+$ sudo ufw app list
+Available applications:
+  OpenSSH
+```
 
  - Here you can see that it recognizes that OpenSSH is installed. Before enabling the firewall, we need to make sure that OpenSSH is allowed so that we can remain logged in.
 
-    $ sudo ufw allow OpenSSH
+```
+$ sudo ufw allow OpenSSH
+```
 
  - Now we can enable the firewall.
 
-    $ sudo ufw enable
+```
+$ sudo ufw enable
+```
 
  - Next we'll verify that the firewall is working.
 
-    # sudo ufw status
-    Status: active
-     
-    To                         Action      From
-    --                         ------      ----
-    OpenSSH                    ALLOW       Anywhere
-    OpenSSH (v6)               ALLOW       Anywhere (v6)
+```
+# sudo ufw status
+Status: active
+ 
+To                         Action      From
+--                         ------      ----
+OpenSSH                    ALLOW       Anywhere
+OpenSSH (v6)               ALLOW       Anywhere (v6)
+```
 
 With the firewall enabled, the server is now reasonably secured.
 
@@ -128,58 +138,78 @@ With the firewall enabled, the server is now reasonably secured.
 
  - Add the Unifi repository.
 
-    $ echo 'deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti' | sudo tee /etc/apt/sources.list.d/100-ubnt-unifi.list
+```
+$ echo 'deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti' | sudo tee /etc/apt/sources.list.d/100-ubnt-unifi.list
+```
 
  - Install the GPG key for the repository.
 
-    $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 06E85760C0A52C50
+```
+$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 06E85760C0A52C50
+```
 
  - Install the `unifi` package.
 
-    $ sudo apt-get update && sudo apt-get install unifi -y
+```
+$ sudo apt-get update && sudo apt-get install unifi -y
+```
 
  - Verify the `unifi` package is installed and running.
 
-    $ sudo service unifi status
+```
+$ sudo service unifi status
+```
 
-    $ sudo ufw allow 8443
-    $ sudo ufw enable
+```
+$ sudo ufw allow 8443
+$ sudo ufw enable
+```
 
 ### Create a unifi profile for `ufw` firewall
 
  - Create a configuration file for the profile.
 
-    $ sudo nano /etc/ufw/applications.d/unifi
+```
+$ sudo nano /etc/ufw/applications.d/unifi
+```
 
  - Paste the following contents into the nano text editor.
 
-    [Unifi]
-    title=UniFi Controller
-    description=The UniFi Controller software is used to provision, monitor, and administrate Ubiquiti devices.
-    ports=8080,8443,8843,8880/tcp|3478/udp
+```
+[Unifi]
+title=UniFi Controller
+description=The UniFi Controller software is used to provision, monitor, and administrate Ubiquiti devices.
+ports=8080,8443,8843,8880/tcp|3478/udp
+```
 
  - To save the file press `Ctrl`+`x`, then type `Y` and press `Enter`.
 
 If everything was done correctly, `ufw` will now recognize the Unifi app.
 
-    $ sudo ufw app list
-    Available applications:
-      OpenSSH
-      Unifi
+```
+$ sudo ufw app list
+Available applications:
+  OpenSSH
+  Unifi
+```
 
  - Enable the unifi app.
 
-    $ sudo ufw allow Unifi
+```
+$ sudo ufw allow Unifi
+```
 
-    $ sudo ufw status
-    Status: active
-     
-    To                         Action      From
-    --                         ------      ----
-    OpenSSH                    ALLOW       Anywhere
-    Unifi                      ALLOW       Anywhere
-    OpenSSH (v6)               ALLOW       Anywhere (v6)
-    Unifi (v6)                 ALLOW       Anywhere (v6)
+```
+$ sudo ufw status
+Status: active
+ 
+To                         Action      From
+--                         ------      ----
+OpenSSH                    ALLOW       Anywhere
+Unifi                      ALLOW       Anywhere
+OpenSSH (v6)               ALLOW       Anywhere (v6)
+Unifi (v6)                 ALLOW       Anywhere (v6)
+```
 
 ### Run the UniFi set up wizard
 
@@ -192,6 +222,7 @@ The server is ready for all intents and purposes. Visit the following URL in you
 -------------------------------------------------------------------------------
 
 #### Additional Reading
+
 [How To Create Your First DigitalOcean Droplet][do1]
 [How To Connect To Your Droplet with SSH][do2]
 [How To Log Into Your Droplet with PuTTY (for windows users)][do3]
