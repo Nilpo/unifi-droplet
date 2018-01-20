@@ -226,13 +226,13 @@ The server is ready for all intents and purposes. Visit the following URL in you
 
 #### Additional Reading
 
-[How To Create Your First DigitalOcean Droplet][do1]
-[How To Connect To Your Droplet with SSH][do2]
-[How To Log Into Your Droplet with PuTTY (for windows users)][do3]
-[Initial Server Setup with Ubuntu 16.04][do4]
-[UFW Essentials: Common Firewall Rules and Commands][do5]
-[UniFi - How to Install & Update via APT on Debian or Ubuntu][ub1]
-[UniFi - Ports Used][ub2]
+ - [How To Create Your First DigitalOcean Droplet][do1]
+ - [How To Connect To Your Droplet with SSH][do2]
+ - [How To Log Into Your Droplet with PuTTY (for windows users)][do3]
+ - [Initial Server Setup with Ubuntu 16.04][do4]
+ - [UFW Essentials: Common Firewall Rules and Commands][do5]
+ - [UniFi - How to Install & Update via APT on Debian or Ubuntu][ub1]
+ - [UniFi - Ports Used][ub2]
 
 [d01]: https://www.digitalocean.com/community/tutorials/how-to-create-your-first-digitalocean-droplet
 [do2]: https://www.digitalocean.com/community/tutorials/how-to-connect-to-your-droplet-with-ssh
