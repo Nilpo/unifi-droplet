@@ -57,7 +57,7 @@ To connect from the command line instead, use the following command:
 
  - Add a regular user account.
 
-```sh
+```
 # adduser ubnt
 Adding user `ubnt' ...
 Adding new group `ubnt' (1000) ...
@@ -79,13 +79,13 @@ Is the information correct? [Y/n] Y
 
  - Add the new user account to the sudoers group so that you can perform privileged commands.
 
-```sh
+```
 # usermod -aG sudo ubnt
 ```
 
  - Log out and log back in using the newly created user.
 
-```sh
+```
 # exit
 $ ssh ubnt@<IP_ADDRESS>
 ```
@@ -94,13 +94,13 @@ $ ssh ubnt@<IP_ADDRESS>
 
  - Make sure that the root directory is not writeable by group.
 
-```sh
+```
 $ sudo chmod g-w /
 ```
 
  - We will use the built-in `ufw` firewall. You can see what apps are already recognized by `ufw` by using the following command.
 
-```sh
+```
 $ sudo ufw app list
 Available applications:
   OpenSSH
@@ -108,19 +108,19 @@ Available applications:
 
  - Here you can see that it recognizes that OpenSSH is installed. Before enabling the firewall, we need to make sure that OpenSSH is allowed so that we can remain logged in.
 
-```sh
+```
 $ sudo ufw allow OpenSSH
 ```
 
  - Now we can enable the firewall.
 
-```sh
+```
 $ sudo ufw enable
 ```
 
  - Next we'll verify that the firewall is working.
 
-```sh
+```
 # sudo ufw status
 Status: active
  
@@ -138,29 +138,29 @@ With the firewall enabled, the server is now reasonably secured.
 
  - Add the Unifi repository.
 
-```sh
+```
 $ echo 'deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti' | sudo tee /etc/apt/sources.list.d/100-ubnt-unifi.list
 ```
 
  - Install the GPG key for the repository.
 
-```sh
+```
 $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 06E85760C0A52C50
 ```
 
  - Install the `unifi` package.
 
-```sh
+```
 $ sudo apt-get update && sudo apt-get install unifi -y
 ```
 
  - Verify the `unifi` package is installed and running.
 
-```sh
+```
 $ sudo service unifi status
 ```
 
-```sh
+```
 $ sudo ufw allow 8443
 $ sudo ufw enable
 ```
@@ -169,7 +169,7 @@ $ sudo ufw enable
 
  - Create a configuration file for the profile.
 
-```sh
+```
 $ sudo nano /etc/ufw/applications.d/unifi
 ```
 
@@ -186,7 +186,7 @@ ports=8080,8443,8843,8880/tcp|3478/udp
 
 If everything was done correctly, `ufw` will now recognize the Unifi app.
 
-```sh
+```
 $ sudo ufw app list
 Available applications:
   OpenSSH
@@ -195,11 +195,11 @@ Available applications:
 
  - Enable the unifi app.
 
-```sh
+```
 $ sudo ufw allow Unifi
 ```
 
-```sh
+```
 $ sudo ufw status
 Status: active
  
