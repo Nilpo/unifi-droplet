@@ -1,7 +1,7 @@
 Setting up Ubiquiti Unifi on DigitalOcean
 =========================================
 
-# Creating a droplet on DigitalOcean
+## Creating a droplet on DigitalOcean
 
 After logging in to the DigitalOcean [dashboard](https://cloud.digitalocean.com/droplets), click the `Create` button and choose `Droplets` from the expanding menu.
 
@@ -29,7 +29,7 @@ Once your droplet is created, its details can be viewed in your droplets list. M
 
 ![screenshot](screenshots/unifi06.png)
 
-# Connect to your droplet
+## Connect to your droplet
 
 You will use SSH to connect to your new DigitalOcean droplet. For Linux and Mac systems, this is easiest done using OpenSSH at the command line. Windows users are recommended to use the free [PuTTY](http://www.putty.org/) tool.
 
@@ -51,40 +51,46 @@ To connect from the command line instead, use the following command:
 
 ![screenshot](screenshots/unifi10.png)
 
-# Setting up your Ubuntu environment
+## Setting up your Ubuntu environment
 
-## Add a regular account and disable login on the root account for security
+### Add a regular account and disable login on the root account for security
 
  - Add a regular user account.
 
-    # adduser ubnt
-    Adding user `ubnt' ...
-    Adding new group `ubnt' (1000) ...
-    Adding new user `ubnt' (1000) with group `ubnt' ...
-    Creating home directory `/home/ubnt' ...
-    Copying files from `/etc/skel' ...
-    Enter new UNIX password: <YOUR_SECURE_PASSWORD>
-    Retype new UNIX password: <YOUR_SECURE_PASSWORD>
-    passwd: password updated successfully
-    Changing the user information for ubnt
-    Enter the new value, or press ENTER for the default
-            Full Name []: Ubiquiti
-            Room Number []: 
-            Work Phone []: 
-            Home Phone []: 
-            Other []: 
-    Is the information correct? [Y/n] Y
+```
+# adduser ubnt
+Adding user `ubnt' ...
+Adding new group `ubnt' (1000) ...
+Adding new user `ubnt' (1000) with group `ubnt' ...
+Creating home directory `/home/ubnt' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: <YOUR_SECURE_PASSWORD>
+Retype new UNIX password: <YOUR_SECURE_PASSWORD>
+passwd: password updated successfully
+Changing the user information for ubnt
+Enter the new value, or press ENTER for the default
+        Full Name []: Ubiquiti
+        Room Number []: 
+        Work Phone []: 
+        Home Phone []: 
+        Other []: 
+Is the information correct? [Y/n] Y
+```
 
  - Add the new user account to the sudoers group so that you can perform privileged commands.
 
-    # usermod -aG sudo ubnt
+```
+# usermod -aG sudo ubnt
+```
 
  - Log out and log back in using the newly created user.
 
-    # exit
-    $ ssh ubnt@<IP_ADDRESS>
+```
+# exit
+$ ssh ubnt@<IP_ADDRESS>
+```
 
-## Set up a firewall
+### Set up a firewall
 
  - Make sure that the root directory is not writeable by group.
 
@@ -116,9 +122,9 @@ To connect from the command line instead, use the following command:
 
 With the firewall enabled, the server is now reasonably secured.
 
-# Install Unifi
+## Install Unifi
 
-## Install the `unifi` package from repository
+### Install the `unifi` package from repository
 
  - Add the Unifi repository.
 
@@ -139,7 +145,7 @@ With the firewall enabled, the server is now reasonably secured.
     $ sudo ufw allow 8443
     $ sudo ufw enable
 
-## Create a unifi profile for `ufw` firewall
+### Create a unifi profile for `ufw` firewall
 
  - Create a configuration file for the profile.
 
@@ -175,7 +181,7 @@ If everything was done correctly, `ufw` will now recognize the Unifi app.
     OpenSSH (v6)               ALLOW       Anywhere (v6)
     Unifi (v6)                 ALLOW       Anywhere (v6)
 
-## Run the UniFi set up wizard
+### Run the UniFi set up wizard
 
 The server is ready for all intents and purposes. Visit the following URL in your browser to continue setting up UniFi with supplied wizard.
 
