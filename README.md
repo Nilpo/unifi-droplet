@@ -20,6 +20,7 @@ As a freelancer, I build a lot of web sites.  That's a lot of code changes to tr
 + [Security best practices](#se)
   - [Disabling root login by SSH](#se)
   - [Setting up passwordless SSH login](#ps)
+  - [Disabling password authentication on the server](#pa)
 + [Additional Reading](#ar)
 
 
@@ -285,7 +286,7 @@ After you [create a normal user](#su), you can disable SSH logins for the root a
  1. Open the `/etc/ssh/sshd_config` file in your preferred text editor (nano, vi, etc.).
 
     ```shell
-    nano /etc/ssh/sshd_config
+    $ nano /etc/ssh/sshd_config
     ```
 
  1. Locate the following line:
@@ -313,7 +314,7 @@ After you [create a normal user](#su), you can disable SSH logins for the root a
  1. Restart the SSH service using the appropriate command for your Linux distribution:
 
     ```shell
-    service ssh restart
+    $ service ssh restart
     ```
 
  1. __While still logged in as root__, try to log in as the new user using SSH in a new terminal window. You should be able to log in. If the login fails, check your settings. __Do not exit your open root session__ until you are able to log in as the normal user in another window.
@@ -321,6 +322,46 @@ After you [create a normal user](#su), you can disable SSH logins for the root a
 [back to top](#top)
 
 #### Setting up passwordless SSH login <a name="ps"></a>
+
+ 1. Create the RSA key pair (on the local computer)
+
+    ```shell
+    $ ssh-keygen -t rsa
+    Enter file in which to save the key (/username/.ssh/id_rsa): <Enter>
+    Enter passphrase (empty for no passphrase): 
+    ```
+
+ 1. Copy the new public key to the server using SSH. Be sure to change *username* and *IP_ADDRESS* to match your server.
+
+    ```shell
+    $ cat ~/.ssh/id_rsa.pub | ssh username@IP_ADDRESS "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+    ```
+
+#### Disabling password authentication on the server <a name="pa"></a>
+
+ 1. Log in to your server with your SSH key for the first time. From the terminal, this done the exact same way with the exception that you will not be prompted for a password.
+
+    ```shell
+    ssh username@<IP-ADDRESS>
+    ```
+
+ 1. Edit the `/etc/ssh/shsd_config` file.
+
+    ```shell
+    $ sudo nano /etc/ssh/sshd_config
+    ```
+
+ 1. Change the `PasswordAuthentication` directive value to `no`.
+
+    ```
+    PasswordAuthentication no
+    ```
+
+ 1. Restart SSH.
+
+    ```shell
+    $ sudo service ssh restart
+    ```
 
 [back to top](#top)
 
@@ -335,6 +376,8 @@ ___
  + [UFW Essentials: Common Firewall Rules and Commands][7]
  + [UniFi - How to Install & Update via APT on Debian or Ubuntu][8]
  + [UniFi - Ports Used][9]
+ + [How To Configure SSH Key-Based Authentication on a Linux Server][10]
+ + [How To Use SSH Keys with DigitalOcean Droplets][11]
 
 [1]: https://cloud.digitalocean.com/droplets
 [2]: http://www.putty.org/
@@ -345,4 +388,5 @@ ___
 [7]:https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands
 [8]: https://help.ubnt.com/hc/en-us/articles/220066768-UniFi-How-to-Install-Update-via-APT-on-Debian-or-Ubuntu
 [9]: https://help.ubnt.com/hc/en-us/articles/218506997-UniFi-Ports-Used
-
+[10]: https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server
+[11]: https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets
