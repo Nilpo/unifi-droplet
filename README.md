@@ -37,21 +37,21 @@ ___
 
  1. Under **Choose an image**, select **One-click apps** and then choose **MongoDB 3.4.10 on 16.04**.
 
-<p align="center"><img src="screenshots/unifi02.png" width="50%" height="50%"></p>
+    <p align="center"><img src="screenshots/unifi02.png" width="50%" height="50%"></p>
 
- - Under **Choose a size**, select a size that fits your budget. (The smallest size should be just fine to get started. It's easy to scale your application up as you grow.)
+ 1. Under **Choose a size**, select a size that fits your budget. (The smallest size should be just fine to get started. It's easy to scale your application up as you grow.)
 
-<p align="center"><img src="screenshots/unifi03.png" width="50%" height="50%"></p>
+    <p align="center"><img src="screenshots/unifi03.png" width="50%" height="50%"></p>
 
- - Under **Choose a datacenter region**, select a region that is close to you and your clients.
- - Under **Select additional options**, select both `Backups` and `Monitoring`. These free addons are important for any production system.
- - Under **Add your SSH keys**, select the SSH key for the machine you are currently working on or create one. If you choose not to use SSH authentication, you can still log in to your droplet using a username and password but SSH is the preferred method because of its increased security. More information about SSH logins can be found [here][4].
+ 1. Under **Choose a datacenter region**, select a region that is close to you and your clients.
+ 1. Under **Select additional options**, select both `Backups` and `Monitoring`. These free addons are important for any production system.
+ 1. Under **Add your SSH keys**, select the SSH key for the machine you are currently working on or create one. If you choose not to use SSH authentication, you can still log in to your droplet using a username and password but SSH is the preferred method because of its increased security. More information about SSH logins can be found [here][4].
 
-<p align="center"><img src="screenshots/unifi04.png" width="50%" height="50%"></p>
+    <p align="center"><img src="screenshots/unifi04.png" width="50%" height="50%"></p>
 
- - Under **Finalize and create**, assign your droplet and appropriate name and click the `Create` button.
+ 1. Under **Finalize and create**, assign your droplet and appropriate name and click the `Create` button.
 
-<p align="center"><img src="screenshots/unifi05.png" width="50%" height="50%"></p>
+    <p align="center"><img src="screenshots/unifi05.png" width="50%" height="50%"></p>
 
 Once your droplet is created, its details can be viewed in your droplets list. Make a note of the IP address that has been assigned to your droplet. You'll need this later along with the temporary password that you will receive in your welcome email.
 
