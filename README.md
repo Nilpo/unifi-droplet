@@ -277,6 +277,11 @@ The server is ready for all intents and purposes. Visit the following URL in you
 After you [create a normal user](#su), you can disable SSH logins for the root account. This greatly improves security by eliminating the most commonly attacked account from remote logins.
 
  1. Log in to the server as *root* using SSH.
+
+    ```shell
+    ssh root@<IP_ADDRESS>
+    ```
+
  1. Open the `/etc/ssh/sshd_config` file in your preferred text editor (nano, vi, etc.).
 
     ```shell
