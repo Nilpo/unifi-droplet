@@ -1,11 +1,11 @@
 Setting up Ubiquiti Unifi on DigitalOcean
 =========================================
 
-###Overview
+### Overview
 
 As a freelancer, I build a lot of web sites.  That's a lot of code changes to track.  Thankfully, a Git-enabled workflow with proper branching makes short work of project tracking.  I can easily see development features in branches as well as a snapshot of the sites' production code.  A nice addition to that workflow is that ability to use Git to push updates to any of the various sites I work on while committing changes.
 
-####Contents <a name="top"></a>
+#### Contents <a name="top"></a>
 + [Prerequisites](#pr)
 + [Creating a droplet on DigitalOcean](#do)
 + [Connecting to a droplet](#cd)
@@ -20,12 +20,10 @@ As a freelancer, I build a lot of web sites.  That's a lot of code changes to tr
 + [Additional Reading](#ar)
 
 
-###Prerequisites <a name="pr"></a>
+### Prerequisites <a name="pr"></a>
 
-* Git, *installed on both the development machine and the live server*
-* a basic working knowledge of Git, beginners welcome!
-* passwordless SSH access to your server using pre-shared keys
-* a hobby (you'll have a lot of extra time on your hands with the quicker workflow)
+* A DigitalOcean account
+* A UniFi cloud account (optional)
 
 [back to top](#top)
 
@@ -33,7 +31,7 @@ ___
 
 ### Creating a droplet on DigitalOcean <a name="do"></a>
 
-After logging in to the DigitalOcean [dashboard](https://cloud.digitalocean.com/droplets), click the **Create** button and choose **Droplets** from the expanding menu.
+After logging in to the DigitalOcean [dashboard][1], click the **Create** button and choose **Droplets** from the expanding menu.
 
 <p align="center"><img src="screenshots/unifi01.png" width="50%" height="50%"></p>
 
@@ -47,7 +45,7 @@ After logging in to the DigitalOcean [dashboard](https://cloud.digitalocean.com/
 
  - Under **Choose a datacenter region**, select a region that is close to you and your clients.
  - Under **Select additional options**, select both `Backups` and `Monitoring`. These free addons are important for any production system.
- - Under **Add your SSH keys**, select the SSH key for the machine you are currently working on or create one. If you choose not to use SSH authentication, you can still log in to your droplet using a username and password but SSH is the preferred method because of its increased security. More information about SSH logins can be found [here](https://www.digitalocean.com/community/tutorials/how-to-connect-to-your-droplet-with-ssh).
+ - Under **Add your SSH keys**, select the SSH key for the machine you are currently working on or create one. If you choose not to use SSH authentication, you can still log in to your droplet using a username and password but SSH is the preferred method because of its increased security. More information about SSH logins can be found [here][4].
 
 <p align="center"><img src="screenshots/unifi04.png" width="50%" height="50%"></p>
 
@@ -63,7 +61,7 @@ Once your droplet is created, its details can be viewed in your droplets list. M
 
 ### Connecting to a droplet <a name="cd"></a>
 
-You will use SSH to connect to your new DigitalOcean droplet. For Linux and Mac systems, this is easiest done using OpenSSH at the command line. Windows users are recommended to use the free [PuTTY](http://www.putty.org/) tool.
+You will use SSH to connect to your new DigitalOcean droplet. For Linux and Mac systems, this is easiest done using OpenSSH at the command line. Windows users are recommended to use the free [PuTTY][2] tool.
 
 Fill in your details on the PuTTY Configuration dialog. Pay special attention the the IP address. Make sure that it matches the IP address of your new droplet.
 
@@ -272,10 +270,21 @@ ___
 
 #### Additional Reading <a name="ar"></a>
 
- - [How To Create Your First DigitalOcean Droplet](https://www.digitalocean.com/community/tutorials/how-to-create-your-first-digitalocean-droplet)
- - [How To Connect To Your Droplet with SSH](https://www.digitalocean.com/community/tutorials/how-to-connect-to-your-droplet-with-ssh)
- - [How To Log Into Your Droplet with PuTTY (for windows users)](https://www.digitalocean.com/community/tutorials/how-to-log-into-your-droplet-with-putty-for-windows-users)
- - [Initial Server Setup with Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)
- - [UFW Essentials: Common Firewall Rules and Commands](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
- - [UniFi - How to Install & Update via APT on Debian or Ubuntu](https://help.ubnt.com/hc/en-us/articles/220066768-UniFi-How-to-Install-Update-via-APT-on-Debian-or-Ubuntu)
- - [UniFi - Ports Used](https://help.ubnt.com/hc/en-us/articles/218506997-UniFi-Ports-Used)
+ + [How To Create Your First DigitalOcean Droplet][3]
+ + [How To Connect To Your Droplet with SSH][4]
+ + [How To Log Into Your Droplet with PuTTY (for windows users)][5]
+ + [Initial Server Setup with Ubuntu 16.04][6]
+ + [UFW Essentials: Common Firewall Rules and Commands][7]
+ + [UniFi - How to Install & Update via APT on Debian or Ubuntu][8]
+ + [UniFi - Ports Used][9]
+
+[1]: https://cloud.digitalocean.com/droplets
+[2]: http://www.putty.org/
+[3]: https://www.digitalocean.com/community/tutorials/how-to-create-your-first-digitalocean-droplet
+[4]: https://www.digitalocean.com/community/tutorials/how-to-connect-to-your-droplet-with-ssh
+[5]: https://www.digitalocean.com/community/tutorials/how-to-log-into-your-droplet-with-putty-for-windows-users
+[6]: https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04
+[7]:https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands
+[8]: https://help.ubnt.com/hc/en-us/articles/220066768-UniFi-How-to-Install-Update-via-APT-on-Debian-or-Ubuntu
+[9]: https://help.ubnt.com/hc/en-us/articles/218506997-UniFi-Ports-Used
+
