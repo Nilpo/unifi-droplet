@@ -87,7 +87,7 @@ To connect from the command line instead, use the following command:
 
 #### Add a regular account
 
- - Add a regular user account.
+ 1. Add a regular user account.
 
 ```shell
 # adduser ubnt
@@ -109,13 +109,13 @@ Enter the new value, or press ENTER for the default
 Is the information correct? [Y/n] Y
 ```
 
- - Add the new user account to the sudoers group so that you can perform privileged commands.
+ 1. Add the new user account to the sudoers group so that you can perform privileged commands.
 
 ```shell
 # usermod -aG sudo ubnt
 ```
 
- - Log out and log back in using the newly created user.
+ 1. Log out and log back in using the newly created user.
 
 ```shell
 # exit
@@ -126,43 +126,43 @@ $ ssh ubnt@<IP_ADDRESS>
 
 #### Set up a firewall <a name="ufw"></a>
 
- - Make sure that the root directory is not writeable by group.
+ 1. Make sure that the root directory is not writeable by group.
 
-```shell
-$ sudo chmod g-w /
-```
+    ```shell
+    $ sudo chmod g-w /
+    ```
 
- - We will use the built-in `ufw` firewall. You can see what apps are already recognized by `ufw` by using the following command.
+ 1. We will use the built-in `ufw` firewall. You can see what apps are already recognized by `ufw` by using the following command.
 
-```shell
-$ sudo ufw app list
-Available applications:
-  OpenSSH
-```
+    ```shell
+    $ sudo ufw app list
+    Available applications:
+      OpenSSH
+    ```
 
- - Here you can see that it recognizes that OpenSSH is installed. Before enabling the firewall, we need to make sure that OpenSSH is allowed so that we can remain logged in.
+ 1. Here you can see that it recognizes that OpenSSH is installed. Before enabling the firewall, we need to make sure that OpenSSH is allowed so that we can remain logged in.
 
-```shell
-$ sudo ufw allow OpenSSH
-```
+    ```shell
+    $ sudo ufw allow OpenSSH
+    ```
 
- - Now we can enable the firewall.
+ 1. Now we can enable the firewall.
 
-```shell
-$ sudo ufw enable
-```
+    ```shell
+    $ sudo ufw enable
+    ```
 
- - Next we'll verify that the firewall is working.
+ 1. Next we'll verify that the firewall is working.
 
-```shell
-$ sudo ufw status
-Status: active
- 
-To                         Action      From
---                         ------      ----
-OpenSSH                    ALLOW       Anywhere
-OpenSSH (v6)               ALLOW       Anywhere (v6)
-```
+    ```shell
+    $ sudo ufw status
+    Status: active
+     
+    To                         Action      From
+    --                         ------      ----
+    OpenSSH                    ALLOW       Anywhere
+    OpenSSH (v6)               ALLOW       Anywhere (v6)
+    ```
 
 With the firewall enabled, the server is now reasonably secured.
 
