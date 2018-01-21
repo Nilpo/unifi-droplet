@@ -31,11 +31,11 @@ ___
 
 ### Creating a droplet on DigitalOcean <a name="do"></a>
 
-After logging in to the DigitalOcean [dashboard][1], click the **Create** button and choose **Droplets** from the expanding menu.
+ 1. After logging in to the DigitalOcean [dashboard][1], click the **Create** button and choose **Droplets** from the expanding menu.
 
-<p align="center"><img src="screenshots/unifi01.png" width="50%" height="50%"></p>
+    <p align="center"><img src="screenshots/unifi01.png" width="50%" height="50%"></p>
 
- - Under **Choose an image**, select **One-click apps** and then choose **MongoDB 3.4.10 on 16.04**.
+ 1. Under **Choose an image**, select **One-click apps** and then choose **MongoDB 3.4.10 on 16.04**.
 
 <p align="center"><img src="screenshots/unifi02.png" width="50%" height="50%"></p>
 
@@ -89,38 +89,38 @@ To connect from the command line instead, use the following command:
 
  1. Add a regular user account.
 
-```shell
-# adduser ubnt
-Adding user `ubnt' ...
-Adding new group `ubnt' (1000) ...
-Adding new user `ubnt' (1000) with group `ubnt' ...
-Creating home directory `/home/ubnt' ...
-Copying files from `/etc/skel' ...
-Enter new UNIX password: <YOUR_SECURE_PASSWORD>
-Retype new UNIX password: <YOUR_SECURE_PASSWORD>
-passwd: password updated successfully
-Changing the user information for ubnt
-Enter the new value, or press ENTER for the default
-        Full Name []: Ubiquiti
-        Room Number []: 
-        Work Phone []: 
-        Home Phone []: 
-        Other []: 
-Is the information correct? [Y/n] Y
-```
+    ```shell
+    # adduser ubnt
+    Adding user `ubnt' ...
+    Adding new group `ubnt' (1000) ...
+    Adding new user `ubnt' (1000) with group `ubnt' ...
+    Creating home directory `/home/ubnt' ...
+    Copying files from `/etc/skel' ...
+    Enter new UNIX password: <YOUR_SECURE_PASSWORD>
+    Retype new UNIX password: <YOUR_SECURE_PASSWORD>
+    passwd: password updated successfully
+    Changing the user information for ubnt
+    Enter the new value, or press ENTER for the default
+            Full Name []: Ubiquiti
+            Room Number []: 
+            Work Phone []: 
+            Home Phone []: 
+            Other []: 
+    Is the information correct? [Y/n] Y
+    ```
 
  1. Add the new user account to the sudoers group so that you can perform privileged commands.
 
-```shell
-# usermod -aG sudo ubnt
-```
+    ```shell
+    # usermod -aG sudo ubnt
+    ```
 
  1. Log out and log back in using the newly created user.
 
-```shell
-# exit
-$ ssh ubnt@<IP_ADDRESS>
-```
+    ```shell
+    # exit
+    $ ssh ubnt@<IP_ADDRESS>
+    ```
 
 [back to top](#top)
 
@@ -182,77 +182,77 @@ $ sudo apt-get update && sudo apt-get upgrade -y
 
 #### Install the `unifi` package from repository
 
- - Add the Unifi repository.
+ 1. Add the Unifi repository.
 
-```shell
-$ echo 'deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti' | sudo tee /etc/apt/sources.list.d/100-ubnt-unifi.list
-```
+    ```shell
+    $ echo 'deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti' | sudo tee /etc/apt/sources.list.d/100-ubnt-unifi.list
+    ```
 
- - Install the GPG key for the repository.
+ 1. Install the GPG key for the repository.
 
-```shell
-$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 06E85760C0A52C50
-```
+    ```shell
+    $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 06E85760C0A52C50
+    ```
 
- - Install the `unifi` package.
+ 1. Install the `unifi` package.
 
-```shell
-$ sudo apt-get update && sudo apt-get install unifi -y
-```
+    ```shell
+    $ sudo apt-get update && sudo apt-get install unifi -y
+    ```
 
- - Verify the `unifi` package is installed and running.
+ 1. Verify the `unifi` package is installed and running.
 
-```shell
-$ sudo service unifi status
-```
+    ```shell
+    $ sudo service unifi status
+    ```
 
 [back to top](#top)
 
 #### Create a unifi profile for `ufw` firewall <a name="ufw2"></a>
 
- - Create a configuration file for the profile.
+ 1. Create a configuration file for the profile.
 
-```shell
-$ sudo nano /etc/ufw/applications.d/unifi
-```
+    ```shell
+    $ sudo nano /etc/ufw/applications.d/unifi
+    ```
 
- - Paste the following contents into the nano text editor.
+ 1. Paste the following contents into the nano text editor.
 
-```
-[Unifi]
-title=UniFi Controller
-description=The UniFi Controller software is used to provision, monitor, and administrate Ubiquiti devices.
-ports=8080,8443,8843,8880/tcp|3478/udp
-```
+    ```
+    [Unifi]
+    title=UniFi Controller
+    description=The UniFi Controller software is used to provision, monitor, and administrate Ubiquiti devices.
+    ports=8080,8443,8843,8880/tcp|3478/udp
+    ```
 
- - To save the file press `Ctrl`+`x`, then type `Y` and press `Enter`.
+ 1. To save the file press `Ctrl`+`x`, then type `Y` and press `Enter`.
 
 If everything was done correctly, `ufw` will now recognize the Unifi app.
 
-```shell
-$ sudo ufw app list
-Available applications:
-  OpenSSH
-  Unifi
-```
+    ```shell
+    $ sudo ufw app list
+    Available applications:
+      OpenSSH
+      Unifi
+    ```
 
- - Enable the unifi app.
+ 1. Enable the unifi app.
 
-```shell
-$ sudo ufw allow Unifi
-```
+    ```shell
+    $ sudo ufw allow Unifi
+    ```
 
-```shell
-$ sudo ufw status
-Status: active
- 
-To                         Action      From
---                         ------      ----
-OpenSSH                    ALLOW       Anywhere
-Unifi                      ALLOW       Anywhere
-OpenSSH (v6)               ALLOW       Anywhere (v6)
-Unifi (v6)                 ALLOW       Anywhere (v6)
-```
+    ```shell
+    $ sudo ufw status
+    Status: active
+     
+    To                         Action      From
+    --                         ------      ----
+    OpenSSH                    ALLOW       Anywhere
+    Unifi                      ALLOW       Anywhere
+    OpenSSH (v6)               ALLOW       Anywhere (v6)
+    Unifi (v6)                 ALLOW       Anywhere (v6)
+    ```
 
 [back to top](#top)
 
