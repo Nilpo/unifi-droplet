@@ -300,13 +300,13 @@ After you [create a normal user](#su), you can disable SSH logins for the root a
     PermitRootLogin no
     ```
 
- 1. Add the following line. Replace username with the name of the user you created earlier.
+ 1. Add the following line. Replace *username* with the name of the user you created earlier.
 
     ```
     AllowUsers username
     ```
 
-    This step is crucial. If you do not add the user to the list of allowed SSH users, you will be unable to log in to your server!
+    > This step is crucial. If you do not add the user to the list of allowed SSH users, you will be unable to log in to your server!
 
  1. Save the changes to the `/etc/ssh/sshd_config` file, and then exit the text editor.
 
