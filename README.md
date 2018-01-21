@@ -323,6 +323,8 @@ After you [create a normal user](#su), you can disable SSH logins for the root a
 
 #### Setting up passwordless SSH login <a name="ps"></a>
 
+Windows users using PuTTY should follow the instructions found [here][12].
+
  1. Create the RSA key pair (on the local computer)
 
     ```shell
@@ -378,6 +380,7 @@ ___
  + [UniFi - Ports Used][9]
  + [How To Configure SSH Key-Based Authentication on a Linux Server][10]
  + [How To Use SSH Keys with DigitalOcean Droplets][11]
+ + [How To Use SSH Keys with PuTTY on DigitalOcean Droplets (Windows users)][12]
 
 [1]: https://cloud.digitalocean.com/droplets
 [2]: http://www.putty.org/
@@ -390,3 +393,4 @@ ___
 [9]: https://help.ubnt.com/hc/en-us/articles/218506997-UniFi-Ports-Used
 [10]: https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server
 [11]: https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets
+[12]: https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users
