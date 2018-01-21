@@ -17,6 +17,9 @@ As a freelancer, I build a lot of web sites.  That's a lot of code changes to tr
   - [Install the `unifi` package from repository](#un)
   - [Create a unifi profile for `ufw` firewall](#ufw2)
   - [Run the UniFi Setup Wizard](#us)
++ [Security best practices](#se)
+  - [Disabling root login by SSH](#se)
+  - [Setting up passwordless SSH login](#ps)
 + [Additional Reading](#ar)
 
 
@@ -67,7 +70,7 @@ Fill in your details on the PuTTY Configuration dialog. Pay special attention th
 
 <p align="center"><img src="screenshots/unifi07.png" width="50%" height="50%"></p>
 
-Log in using the username `root` and the password that was supplied to you. When logging in for the first time, you will be required to set a permanent password for your root account. Once you have done this, you will be logged in to your droplet and you will have a root prompt.
+Log in using the username *root* and the password that was supplied to you. When logging in for the first time, you will be required to set a permanent password for your root account. Once you have done this, you will be logged in to your droplet and you will have a root prompt.
 
 <p align="center"><img src="screenshots/unifi09.png" width="50%" height="50%"></p>
 
@@ -263,6 +266,56 @@ The server is ready for all intents and purposes. Visit the following URL in you
     https://<IP-ADDRESS>:8443
 
 <p align="center"><img src="screenshots/unifi11.png" width="50%" height="50%"></p>
+
+[back to top](#top)
+
+
+### Security best practices <a name="se"></a>
+
+#### Disabling root login by SSH
+
+After you [create a normal user](#su), you can disable SSH logins for the root account. This greatly improves security by eliminating the most commonly attacked account from remote logins.
+
+ 1. Log in to the server as *root* using SSH.
+ 1. Open the `/etc/ssh/sshd_config` file in your preferred text editor (nano, vi, etc.).
+
+    ```shell
+    nano /etc/ssh/sshd_config
+    ```
+
+ 1. Locate the following line:
+
+    ```
+    PermitRootLogin yes
+    ```
+
+ 1. Modify the line as follows:
+
+    ```
+    PermitRootLogin no
+    ```
+
+ 1. Add the following line. Replace username with the name of the user you created earlier.
+
+    ```
+    AllowUsers username
+    ```
+
+    This step is crucial. If you do not add the user to the list of allowed SSH users, you will be unable to log in to your server!
+
+ 1. Save the changes to the `/etc/ssh/sshd_config` file, and then exit the text editor.
+
+ 1. Restart the SSH service using the appropriate command for your Linux distribution:
+
+    ```shell
+    service ssh restart
+    ```
+
+ 1. __While still logged in as root__, try to log in as the new user using SSH in a new terminal window. You should be able to log in. If the login fails, check your settings. __Do not exit your open root session__ until you are able to log in as the normal user in another window.
+
+[back to top](#top)
+
+#### Setting up passwordless SSH login <a name="ps"></a>
 
 [back to top](#top)
 
