@@ -17,7 +17,7 @@ As a freelancer, I build a lot of web sites.  That's a lot of code changes to tr
   - [Install the `unifi` package from repository](#un)
   - [Create a unifi profile for `ufw` firewall](#ufw2)
   - [Run the UniFi Setup Wizard](#us)
-+ [Security best practices](#se)
++ [Security best practices (Recommended)](#se)
   - [Disabling root login by SSH](#se)
   - [Setting up passwordless SSH login](#ps)
   - [Disabling password authentication on the server](#pa)
@@ -271,7 +271,7 @@ The server is ready for all intents and purposes. Visit the following URL in you
 [back to top](#top)
 
 
-### Security best practices <a name="se"></a>
+### Security best practices (Recommended) <a name="se"></a>
 
 #### Disabling root login by SSH
 
