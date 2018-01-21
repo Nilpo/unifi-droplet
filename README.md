@@ -1,63 +1,97 @@
 Setting up Ubiquiti Unifi on DigitalOcean
 =========================================
 
-## Creating a droplet on DigitalOcean
+###Overview
+
+As a freelancer, I build a lot of web sites.  That's a lot of code changes to track.  Thankfully, a Git-enabled workflow with proper branching makes short work of project tracking.  I can easily see development features in branches as well as a snapshot of the sites' production code.  A nice addition to that workflow is that ability to use Git to push updates to any of the various sites I work on while committing changes.
+
+####Contents <a name="top"></a>
++ [Prerequisites](#pr)
++ [Creating a droplet on DigitalOcean](#do)
++ [Connecting to a droplet](#cd)
++ [Setting up an Ubuntu environment](#su)
+  - [Add a regular account](#su)
+  - [Set up a firewall](#ufw)
+  - [Update the system](#ud)
++ [Install UniFi](#un)
+  - [Install the `unifi` package from repository](#un)
+  - [Create a unifi profile for `ufw` firewall](#ufw2)
+  - [Run the UniFi Setup Wizard](#us)
++ [Additional Reading](#ar)
+
+
+###Prerequisites <a name="pr"></a>
+
+* Git, *installed on both the development machine and the live server*
+* a basic working knowledge of Git, beginners welcome!
+* passwordless SSH access to your server using pre-shared keys
+* a hobby (you'll have a lot of extra time on your hands with the quicker workflow)
+
+[back to top](#top)
+
+___
+
+### Creating a droplet on DigitalOcean <a name="do"></a>
 
 After logging in to the DigitalOcean [dashboard](https://cloud.digitalocean.com/droplets), click the **Create** button and choose **Droplets** from the expanding menu.
 
-![screenshot](screenshots/unifi01.png)
+<p align="center"><img src="screenshots/unifi01.png" width="50%" height="50%"></p>
 
  - Under **Choose an image**, select **One-click apps** and then choose **MongoDB 3.4.10 on 16.04**.
 
-![screenshot](screenshots/unifi02.png)
+<p align="center"><img src="screenshots/unifi02.png" width="50%" height="50%"></p>
 
  - Under **Choose a size**, select a size that fits your budget. (The smallest size should be just fine to get started. It's easy to scale your application up as you grow.)
 
-![screenshot](screenshots/unifi03.png)
+<p align="center"><img src="screenshots/unifi03.png" width="50%" height="50%"></p>
 
  - Under **Choose a datacenter region**, select a region that is close to you and your clients.
  - Under **Select additional options**, select both `Backups` and `Monitoring`. These free addons are important for any production system.
  - Under **Add your SSH keys**, select the SSH key for the machine you are currently working on or create one. If you choose not to use SSH authentication, you can still log in to your droplet using a username and password but SSH is the preferred method because of its increased security. More information about SSH logins can be found [here](https://www.digitalocean.com/community/tutorials/how-to-connect-to-your-droplet-with-ssh).
 
-![screenshot](screenshots/unifi04.png)
+<p align="center"><img src="screenshots/unifi04.png" width="50%" height="50%"></p>
 
  - Under **Finalize and create**, assign your droplet and appropriate name and click the `Create` button.
 
-![screenshot](screenshots/unifi05.png)
+<p align="center"><img src="screenshots/unifi05.png" width="50%" height="50%"></p>
 
 Once your droplet is created, its details can be viewed in your droplets list. Make a note of the IP address that has been assigned to your droplet. You'll need this later along with the temporary password that you will receive in your welcome email.
 
-![screenshot](screenshots/unifi06.png)
+<p align="center"><img src="screenshots/unifi06.png" width="50%" height="50%"></p>
 
-## Connect to your droplet
+[back to top](#top)
+
+### Connecting to a droplet <a name="cd"></a>
 
 You will use SSH to connect to your new DigitalOcean droplet. For Linux and Mac systems, this is easiest done using OpenSSH at the command line. Windows users are recommended to use the free [PuTTY](http://www.putty.org/) tool.
 
 Fill in your details on the PuTTY Configuration dialog. Pay special attention the the IP address. Make sure that it matches the IP address of your new droplet.
 
-![screenshot](screenshots/unifi07.png)
+<p align="center"><img src="screenshots/unifi07.png" width="50%" height="50%"></p>
 
 Log in using the username `root` and the password that was supplied to you. When logging in for the first time, you will be required to set a permanent password for your root account. Once you have done this, you will be logged in to your droplet and you will have a root prompt.
 
-![screenshot](screenshots/unifi09.png)
+<p align="center"><img src="screenshots/unifi09.png" width="50%" height="50%"></p>
 
 PuTTY will also warn you that it does not recognize the certificate for the server your are connecting to. Since this is your first time connecting, select `Yes` to accept the server's certificate and open the connection.
 
-![screenshot](screenshots/unifi08.png)
+<p align="center"><img src="screenshots/unifi08.png" width="50%" height="50%"></p>
 
 To connect from the command line instead, use the following command:
 
 	ssh root@<IP_ADDRESS>
 
-![screenshot](screenshots/unifi10.png)
+<p align="center"><img src="screenshots/unifi10.png" width="50%" height="50%"></p>
 
-## Setting up your Ubuntu environment
+[back to top](#top)
 
-### Add a regular account and disable login on the root account for security
+### Setting up an Ubuntu environment <a name="su"></a>
+
+#### Add a regular account
 
  - Add a regular user account.
 
-```
+```shell
 # adduser ubnt
 Adding user `ubnt' ...
 Adding new group `ubnt' (1000) ...
@@ -79,28 +113,30 @@ Is the information correct? [Y/n] Y
 
  - Add the new user account to the sudoers group so that you can perform privileged commands.
 
-```
+```shell
 # usermod -aG sudo ubnt
 ```
 
  - Log out and log back in using the newly created user.
 
-```
+```shell
 # exit
 $ ssh ubnt@<IP_ADDRESS>
 ```
 
-### Set up a firewall
+[back to top](#top)
+
+#### Set up a firewall <a name="ufw"></a>
 
  - Make sure that the root directory is not writeable by group.
 
-```
+```shell
 $ sudo chmod g-w /
 ```
 
  - We will use the built-in `ufw` firewall. You can see what apps are already recognized by `ufw` by using the following command.
 
-```
+```shell
 $ sudo ufw app list
 Available applications:
   OpenSSH
@@ -108,19 +144,19 @@ Available applications:
 
  - Here you can see that it recognizes that OpenSSH is installed. Before enabling the firewall, we need to make sure that OpenSSH is allowed so that we can remain logged in.
 
-```
+```shell
 $ sudo ufw allow OpenSSH
 ```
 
  - Now we can enable the firewall.
 
-```
+```shell
 $ sudo ufw enable
 ```
 
  - Next we'll verify that the firewall is working.
 
-```
+```shell
 $ sudo ufw status
 Status: active
  
@@ -132,47 +168,53 @@ OpenSSH (v6)               ALLOW       Anywhere (v6)
 
 With the firewall enabled, the server is now reasonably secured.
 
-## Update the system
+[back to top](#top)
+
+#### Update the system <a name="ud"></a>
 
 Now is a good time to update all of the preinstalled packages on the server.
 
-```
+```shell
 $ sudo apt-get update && sudo apt-get upgrade -y
 ```
 
-## Install Unifi
+[back to top](#top)
 
-### Install the `unifi` package from repository
+### Install UniFi <a name="un"></a>
+
+#### Install the `unifi` package from repository
 
  - Add the Unifi repository.
 
-```
+```shell
 $ echo 'deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti' | sudo tee /etc/apt/sources.list.d/100-ubnt-unifi.list
 ```
 
  - Install the GPG key for the repository.
 
-```
+```shell
 $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 06E85760C0A52C50
 ```
 
  - Install the `unifi` package.
 
-```
+```shell
 $ sudo apt-get update && sudo apt-get install unifi -y
 ```
 
  - Verify the `unifi` package is installed and running.
 
-```
+```shell
 $ sudo service unifi status
 ```
 
-### Create a unifi profile for `ufw` firewall
+[back to top](#top)
+
+#### Create a unifi profile for `ufw` firewall <a name="ufw2"></a>
 
  - Create a configuration file for the profile.
 
-```
+```shell
 $ sudo nano /etc/ufw/applications.d/unifi
 ```
 
@@ -189,7 +231,7 @@ ports=8080,8443,8843,8880/tcp|3478/udp
 
 If everything was done correctly, `ufw` will now recognize the Unifi app.
 
-```
+```shell
 $ sudo ufw app list
 Available applications:
   OpenSSH
@@ -198,11 +240,11 @@ Available applications:
 
  - Enable the unifi app.
 
-```
+```shell
 $ sudo ufw allow Unifi
 ```
 
-```
+```shell
 $ sudo ufw status
 Status: active
  
@@ -214,17 +256,21 @@ OpenSSH (v6)               ALLOW       Anywhere (v6)
 Unifi (v6)                 ALLOW       Anywhere (v6)
 ```
 
-### Run the UniFi set up wizard
+[back to top](#top)
+
+#### Run the UniFi Setup Wizard <a name="us"></a>
 
 The server is ready for all intents and purposes. Visit the following URL in your browser to continue setting up UniFi with supplied wizard.
 
     https://<IP-ADDRESS>:8443
 
-![screenshot](screenshots/unifi11.png)
+<p align="center"><img src="screenshots/unifi11.png" width="50%" height="50%"></p>
 
--------------------------------------------------------------------------------
+[back to top](#top)
 
-#### Additional Reading
+___
+
+#### Additional Reading <a name="ar"></a>
 
  - [How To Create Your First DigitalOcean Droplet](https://www.digitalocean.com/community/tutorials/how-to-create-your-first-digitalocean-droplet)
  - [How To Connect To Your Droplet with SSH](https://www.digitalocean.com/community/tutorials/how-to-connect-to-your-droplet-with-ssh)
