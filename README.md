@@ -3,7 +3,7 @@ Setting up Ubiquiti Unifi on DigitalOcean
 
 ### Overview
 
-As a freelancer, I build a lot of web sites.  That's a lot of code changes to track.  Thankfully, a Git-enabled workflow with proper branching makes short work of project tracking.  I can easily see development features in branches as well as a snapshot of the sites' production code.  A nice addition to that workflow is that ability to use Git to push updates to any of the various sites I work on while committing changes.
+Ubiquiti's UniFi controller is a great way to manage networks built on Ubiquiti infrastructure. As a service provider, you may wish to host a centralized controller in the cloud so that you can manage multiple networks from a single location. This how-to demonstrates how you might go about deploying Ubiquiti UniFi on a DigitalOcean droplet for easy scalability.
 
 #### Contents <a name="top"></a>
 + [Prerequisites](#pr)
@@ -231,14 +231,14 @@ $ sudo apt-get update && sudo apt-get upgrade -y
 
  1. To save the file press `Ctrl`+`x`, then type `Y` and press `Enter`.
 
-If everything was done correctly, `ufw` will now recognize the Unifi app.
+    If everything was done correctly, `ufw` will now recognize the Unifi app.
 
-    ```shell
-    $ sudo ufw app list
+    ```shell
+    $ sudo ufw app list
     Available applications:
-      OpenSSH
-      Unifi
-    ```
+      OpenSSH
+      Unifi
+    ```
 
  1. Enable the unifi app.
 
