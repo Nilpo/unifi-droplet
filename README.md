@@ -233,12 +233,12 @@ $ sudo apt-get update && sudo apt-get upgrade -y
 
     If everything was done correctly, `ufw` will now recognize the Unifi app.
 
-    ```shell
-    $ sudo ufw app list
+    ```shell
+    $ sudo ufw app list
     Available applications:
-      OpenSSH
-      Unifi
-    ```
+      OpenSSH
+      Unifi
+    ```
 
  1. Enable the unifi app.
 
