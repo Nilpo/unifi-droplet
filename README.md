@@ -21,6 +21,7 @@ Ubiquiti's UniFi controller is a great way to manage networks built on Ubiquiti 
   - [Disabling root login by SSH](#se)
   - [Setting up passwordless SSH login](#ps)
   - [Disabling password authentication on the server](#pa)
+  - [Install Fail2Ban](#f2b)
 + [Additional Reading](#ar)
 
 
@@ -365,6 +366,19 @@ Windows users using PuTTY should follow the instructions found [here][12].
     $ sudo service ssh restart
     ```
 
+#### Installing Fail2Ban <a name="f2b"></a>
+
+Leaving the SSH port open to the public, as we've done, presents a potential risk. Anyone can attempt a connection to your droplet from anywhere. While using `ufw` to lock the SSH port down to connections from whitelisted IP addresses is a great boost to security, it comes at the cost of usability since you also won't be able to access your droplet except from whitelisted IP addresses. If you ever need to access your UniFi controller from the field, that would present a problem for you. So rather than locking down the port itself, a service such as `fail2ban` can help to protect your droplet. The Fail2Ban service monitors access logs for suspicious activity and proactively sets firewall rules based upon limitations that you provide. As an example, Fail2Ban can implement flood control that bans an specific IP address after a specified number of invalid login attempts. This is especially useful for mitigating brute force attacks.
+
+ 1. Install Fail2Ban.
+
+    ```shell
+    $ sudo apt-get update
+    $ sudo apt-get install fail2ban
+    ```
+
+On Ubuntu, Fail2Ban's defaults will protect SSH by blocking IP addresses if there are three failed login attempts within 10 minutes. These options are configurable.
+
 [back to top](#top)
 
 ___
@@ -381,6 +395,7 @@ ___
  + [How To Configure SSH Key-Based Authentication on a Linux Server][10]
  + [How To Use SSH Keys with DigitalOcean Droplets][11]
  + [How To Use SSH Keys with PuTTY on DigitalOcean Droplets (Windows users)][12]
+ + [How To Protect SSH with Fail2Ban on Ubuntu 14.04][13]
 
 [1]: https://cloud.digitalocean.com/droplets
 [2]: http://www.putty.org/
@@ -394,3 +409,4 @@ ___
 [10]: https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server
 [11]: https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets
 [12]: https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users
+[13]: https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-ubuntu-14-04
