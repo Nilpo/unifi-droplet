@@ -22,6 +22,7 @@ Ubiquiti's UniFi controller is a great way to manage networks built on Ubiquiti 
   - [Setting up passwordless SSH login](#ps)
   - [Disabling password authentication on the server](#pa)
   - [Install Fail2Ban](#f2b)
+  - [Force a password when using `sudo`](#sudo)
 + [Additional Reading](#ar)
 
 
@@ -119,6 +120,15 @@ To connect from the command line instead, use the following command:
     ```shell
     # usermod -aG sudo ubnt
     ```
+
+ 1. (Optional) If you chose to add an SSH key during droplet creation, you'll need to copy the authorized key to your new user before logging in. If you did not choose to set up SSH access during creation, you can skip this step.
+ 
+   ```shell
+   # mkdir -p /home/ubnt/.ssh
+   # cp /root/.ssh/authorized_keys /home/ubnt/.ssh/authorized_keys
+   # chmod 700 /home/ubnt/.ssh
+   # chmod 644 /home/ubnt/.ssh/authorized_keys
+   # chown -R ubnt:ubnt /home/ubnt/
 
  1. Log out and log back in using the newly created user.
 
@@ -274,7 +284,7 @@ The server is ready for all intents and purposes. Visit the following URL in you
 
 ### Security best practices (Recommended) <a name="se"></a>
 
-#### Disabling root login by SSH
+#### Disable root login by SSH
 
 After you [create a normal user](#su), you can disable SSH logins for the root account. This greatly improves security by eliminating the most commonly attacked account from remote logins.
 
@@ -322,7 +332,7 @@ After you [create a normal user](#su), you can disable SSH logins for the root a
 
 [back to top](#top)
 
-#### Setting up passwordless SSH login <a name="ps"></a>
+#### Set up passwordless SSH login <a name="ps"></a>
 
 Windows users using PuTTY should follow the instructions found [here][12].
 
@@ -340,7 +350,7 @@ Windows users using PuTTY should follow the instructions found [here][12].
     $ cat ~/.ssh/id_rsa.pub | ssh username@IP_ADDRESS "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
     ```
 
-#### Disabling password authentication on the server <a name="pa"></a>
+#### Disable password authentication on the server <a name="pa"></a>
 
  1. Log in to your server with your SSH key for the first time. From the terminal, this done the exact same way with the exception that you will not be prompted for a password.
 
@@ -366,7 +376,7 @@ Windows users using PuTTY should follow the instructions found [here][12].
     $ sudo service ssh restart
     ```
 
-#### Installing Fail2Ban <a name="f2b"></a>
+#### Install Fail2Ban <a name="f2b"></a>
 
 Leaving the SSH port open to the public, as we've done, presents a potential risk. Anyone can attempt a connection to your droplet from anywhere. While using `ufw` to lock the SSH port down to connections from whitelisted IP addresses is a great boost to security, it comes at the cost of usability since you also won't be able to access your droplet except from whitelisted IP addresses. If you ever need to access your UniFi controller from the field, that would present a problem for you. So rather than locking down the port itself, a service such as `fail2ban` can help to protect your droplet. The Fail2Ban service monitors access logs for suspicious activity and proactively sets firewall rules based upon limitations that you provide. As an example, Fail2Ban can implement flood control that bans an specific IP address after a specified number of invalid login attempts. This is especially useful for mitigating brute force attacks.
 
@@ -378,6 +388,28 @@ Leaving the SSH port open to the public, as we've done, presents a potential ris
     ```
 
 On Ubuntu, Fail2Ban's defaults will protect SSH by blocking IP addresses if there are three failed login attempts within 10 minutes. These options are configurable.
+
+[back to top](#top)
+
+#### Force a password when using `sudo` <a name="sudo"></a>
+
+Forcing sudo to require a password is a form of two-factor authentication. In the event that your private SSH key is ever compromised, it will limit an attacker's ability to damage your system by preventing the use of any commands that require sudo by prompting for a password every time. By default, this is not the case and normal users with sudo permission can simply execute commands as root without any additional authentication.
+
+ 1. Edit `/etc/sudoers.d/90-cloud-init-users`.
+
+    ```shell
+    $ sudo nano /etc/sudoers.d/90-cloud-init-users
+    ```
+
+ 1. Edit the existing line for root and add one for the the new user. Make sure that `NOPASSWD` is changed to `PASSWD`.
+
+    ```shell
+    # User rules for root
+    root ALL=(ALL) PASSWD:ALL
+    ubnt ALL=(ALL) PASSWD:ALL
+    ```
+
+ 1. Save the changes and exit Nano.
 
 [back to top](#top)
 
